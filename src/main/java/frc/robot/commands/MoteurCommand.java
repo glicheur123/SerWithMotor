@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.Robot;
 import frc.robot.subsystems.Moteur;
 
@@ -46,12 +47,7 @@ public class MoteurCommand extends Command {
     System.out.println("\"" + test + "\"");
     if(test == 20)
     {
-      Robot.m_Moteur.stop();
-      try {
-        Thread.sleep(2000);
-      } catch (Exception e) {
-        //TODO: handle exception
-      }
+      Scheduler.getInstance().removeAll();
       texte = "0";
     }else{
       Robot.m_Moteur.right();
