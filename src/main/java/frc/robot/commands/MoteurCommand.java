@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Moteur;
@@ -25,19 +26,34 @@ public class MoteurCommand extends Command {
   @Override
   protected void initialize() {
     ser = new SerialPort(9600, SerialPort.Port.kUSB);
+    
   }
 
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    String test = ser.readString();
-    System.out.print(test);
-    if(test == "d20")
+    Robot.m_Moteur.right();
+    String texte = "0";
+    if(ser.readString(2).isEmpty())
+    {
+      texte = "0";
+    }else{
+      texte = ser.readString(2);
+    }
+    //String texte = serial.readString();
+    int test = Integer.parseInt(texte.trim());
+    System.out.println("\"" + test + "\"");
+    if(test == 20)
     {
       Robot.m_Moteur.stop();
-    }else
-    {
+      try {
+        Thread.sleep(2000);
+      } catch (Exception e) {
+        //TODO: handle exception
+      }
+      texte = "0";
+    }else{
       Robot.m_Moteur.right();
     }
 
